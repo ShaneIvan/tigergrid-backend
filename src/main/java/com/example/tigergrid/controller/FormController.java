@@ -1,11 +1,20 @@
 package com.example.tigergrid.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.example.tigergrid.model.Form.Form;
 import com.example.tigergrid.service.FormService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/form")
@@ -21,7 +30,7 @@ public class FormController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public String create(@PathVariable int id) {
+    public String delete(@PathVariable int id) {
         return formService.deleteForm(id);
     }
 
@@ -39,4 +48,12 @@ public class FormController {
     public Form update(@RequestBody Form form) {
         return formService.updateForm(form);
     }
+
+    @PostMapping("/submitAll")
+    public String submitAll(@RequestBody List<Form> forms) {
+        formService.saveAllForms(forms);
+        return "All forms submitted successfully!";
+    }
+
+
 }
