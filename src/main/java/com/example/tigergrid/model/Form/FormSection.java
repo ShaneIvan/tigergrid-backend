@@ -3,7 +3,6 @@ package com.example.tigergrid.model.Form;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -22,8 +21,6 @@ public class FormSection {
     private int id;
     private String title;
 
-    
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "form_id")
     @JsonBackReference
@@ -33,7 +30,6 @@ public class FormSection {
     private List<Dropdown> dropdowns;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JsonManagedReference
     private List<Question> questions;
 
     @OneToMany(cascade = CascadeType.ALL)
