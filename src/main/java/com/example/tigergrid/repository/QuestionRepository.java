@@ -1,9 +1,11 @@
 package com.example.tigergrid.repository;
 
-import com.example.tigergrid.model.Form.Question;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import java.util.List;
 
-@Repository
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.example.tigergrid.model.Form.Question;
+
 public interface QuestionRepository extends JpaRepository<Question, Integer> {
+    List<Question> findByFormId(int formId);
 }

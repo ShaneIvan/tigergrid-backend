@@ -1,8 +1,16 @@
 package com.example.tigergrid.model.Form;
 
-import jakarta.persistence.*;
+import java.util.List;
 
-import java.util.Map;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Form {
@@ -12,9 +20,12 @@ public class Form {
     private String title;
     private String description;
     private boolean visible;
-    @OneToMany(cascade = CascadeType.ALL)
-    private Map<Integer, FormSection> sections;
 
+    @OneToMany(mappedBy = "form", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @JsonManagedReference
+    private List<FormSection> sections;
+
+    // Getters and setters
     public int getId() {
         return id;
     }
@@ -47,11 +58,14 @@ public class Form {
         this.visible = visible;
     }
 
-    public Map<Integer, FormSection> getSections() {
+    public List<FormSection> getSections() {
         return sections;
     }
 
-    public void setSections(Map<Integer, FormSection> sections) {
+    public void setSections(List<FormSection> sections) {
         this.sections = sections;
+        for (FormSection section : sections) {
+            section.setForm(this);
+        }
     }
 }

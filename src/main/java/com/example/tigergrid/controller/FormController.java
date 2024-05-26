@@ -39,6 +39,12 @@ public class FormController {
         return formService.getForm(id);
     }
 
+    @GetMapping("/getFormWithQuestions/{formId}")
+    public Form getFormWithQuestions(@PathVariable int formId) {
+        return formService.getFormWithQuestions(formId);
+    }
+
+
     @GetMapping("/getAll")
     public List<Form> getAll() {
         return formService.getAllForms();
@@ -54,6 +60,4 @@ public class FormController {
         formService.saveAllForms(forms);
         return "All forms submitted successfully!";
     }
-
-
 }

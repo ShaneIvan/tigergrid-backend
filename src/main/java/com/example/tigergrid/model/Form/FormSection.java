@@ -1,8 +1,19 @@
 package com.example.tigergrid.model.Form;
 
-import jakarta.persistence.*;
+import java.util.List;
 
-import java.util.Map;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class FormSection {
@@ -11,13 +22,24 @@ public class FormSection {
     private int id;
     private String title;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private Map<Integer, Dropdown> dropdowns;
-    @OneToMany(cascade = CascadeType.ALL)
-    private Map<Integer, Question> questions;
-    @OneToMany(cascade = CascadeType.ALL)
-    private Map<Integer, CustomAnswer> customAnswers;
+    
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "form_id")
+    @JsonBackReference
+    private Form form;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Dropdown> dropdowns;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Question> questions;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<CustomAnswer> customAnswers;
+
+    // Getters and setters
     public int getId() {
         return id;
     }
@@ -34,27 +56,35 @@ public class FormSection {
         this.title = title;
     }
 
-    public Map<Integer, Dropdown> getDropdowns() {
+    public Form getForm() {
+        return form;
+    }
+
+    public void setForm(Form form) {
+        this.form = form;
+    }
+
+    public List<Dropdown> getDropdowns() {
         return dropdowns;
     }
 
-    public void setDropdowns(Map<Integer, Dropdown> dropdowns) {
+    public void setDropdowns(List<Dropdown> dropdowns) {
         this.dropdowns = dropdowns;
     }
 
-    public Map<Integer, Question> getQuestions() {
+    public List<Question> getQuestions() {
         return questions;
     }
 
-    public void setQuestions(Map<Integer, Question> questions) {
+    public void setQuestions(List<Question> questions) {
         this.questions = questions;
     }
 
-    public Map<Integer, CustomAnswer> getCustomAnswers() {
+    public List<CustomAnswer> getCustomAnswers() {
         return customAnswers;
     }
 
-    public void setCustomAnswers(Map<Integer, CustomAnswer> customAnswers) {
+    public void setCustomAnswers(List<CustomAnswer> customAnswers) {
         this.customAnswers = customAnswers;
     }
 }
