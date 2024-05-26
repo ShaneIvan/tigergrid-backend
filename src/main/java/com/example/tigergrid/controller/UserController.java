@@ -1,12 +1,21 @@
 package com.example.tigergrid.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.example.tigergrid.model.User;
 import com.example.tigergrid.service.LoggedInService;
 import com.example.tigergrid.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -23,7 +32,7 @@ public class UserController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public String create(@PathVariable int id) {
+    public String delete(@PathVariable int id) {
         return userService.deleteUser(id);
     }
 
@@ -46,8 +55,8 @@ public class UserController {
     public User login(@PathVariable String email, @PathVariable String password) {
         List<User> allUsers = userService.getAllUsers();
 
-        for(User user : allUsers) {
-            if(user.getEmail().equals(email) && user.getPassword().equals(password)) {
+        for (User user : allUsers) {
+            if (user.getEmail().equals(email) && user.getPassword().equals(password)) {
                 loggedInService.logIn(user.getId());
                 return user;
             }
