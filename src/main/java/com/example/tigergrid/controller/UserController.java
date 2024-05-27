@@ -54,7 +54,7 @@ public class UserController {
     @GetMapping("/login/{email}/{password}")
     public User login(@PathVariable String email, @PathVariable String password) {
         List<User> allUsers = userService.getAllUsers();
-
+    
         for (User user : allUsers) {
             if (user.getEmail().equals(email) && user.getPassword().equals(password)) {
                 loggedInService.logIn(user.getId());
@@ -64,6 +64,7 @@ public class UserController {
         loggedInService.logOut();
         return null;
     }
+    
 
     @GetMapping("/logout")
     public String logout() {
