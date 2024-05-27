@@ -3,6 +3,8 @@ package com.example.tigergrid.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,19 +54,18 @@ public class UserController {
     }
 
     @GetMapping("/login/{email}/{password}")
-    public User login(@PathVariable String email, @PathVariable String password) {
+    public ResponseEntity<User> login(@PathVariable String email, @PathVariable String password) {
         List<User> allUsers = userService.getAllUsers();
-    
+
         for (User user : allUsers) {
             if (user.getEmail().equals(email) && user.getPassword().equals(password)) {
                 loggedInService.logIn(user.getId());
-                return user;
+                return ResponseEntity.ok(user);
             }
         }
         loggedInService.logOut();
-        return null;
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
     }
-    
 
     @GetMapping("/logout")
     public String logout() {
