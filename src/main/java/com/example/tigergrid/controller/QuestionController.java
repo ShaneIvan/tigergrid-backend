@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.tigergrid.model.Form.Question;
+import com.example.tigergrid.model.Form.TextQuestion;
 import com.example.tigergrid.service.QuestionService;
 
 @RestController
@@ -54,4 +55,9 @@ public class QuestionController {
         questionService.saveAllQuestions(questions);
         return "All questions submitted successfully!";
     }
+
+    // @PostMapping("/submitText")
+    // public TextQuestion submitText(@RequestBody TextQuestion textQuestion) {
+    //     return questionService.saveTextQuestion(textQuestion);
+    // }
 }

@@ -55,6 +55,16 @@ public class FormController {
         return formService.updateForm(form);
     }
 
+    @PutMapping("/hide/{id}")
+    public Form hideForm(@PathVariable int id) {
+        return formService.hideForm(id);
+    }
+
+    @PutMapping("/show/{id}")
+    public Form showForm(@PathVariable int id) {
+        return formService.showForm(id);
+    }
+
     @PostMapping("/submitAll")
     public String submitAll(@RequestBody List<Form> forms) {
         formService.saveAllForms(forms);

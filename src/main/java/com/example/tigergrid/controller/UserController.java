@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.tigergrid.model.User;
@@ -51,6 +52,12 @@ public class UserController {
     @GetMapping("/getLoggedIn")
     public User getLoggedIn() {
         return loggedInService.getLoggedIn();
+    }
+
+    @GetMapping("/check-email")
+    public ResponseEntity<?> checkEmail(@RequestParam String email) {
+        boolean exists = userService.checkEmailExists(email);
+        return ResponseEntity.ok().body("{\"exists\":" + exists + "}");
     }
 
     @GetMapping("/login/{email}/{password}")

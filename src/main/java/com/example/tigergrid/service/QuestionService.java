@@ -49,9 +49,8 @@ public class QuestionService {
     public void saveAllQuestions(List<Question> questions) {
         questions.forEach(question -> {
             if (question.getForm() != null && question.getForm().getId() != 0) {
-                Form form = formRepository.findById(question.getForm().getId()).orElse(null);
-                if (form != null) {
-                    question.setForm(form);
+                if(question.getNewInputType() == "dropdown"){
+                    
                 }
             }
         });

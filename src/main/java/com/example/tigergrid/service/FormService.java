@@ -2,6 +2,8 @@ package com.example.tigergrid.service;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,8 @@ import jakarta.persistence.PersistenceContext;
 
 @Service
 public class FormService {
+
+    private static final Logger logger = LoggerFactory.getLogger(FormService.class);
 
     @Autowired
     private FormRepository formRepository;
@@ -42,7 +46,6 @@ public class FormService {
     public Form getForm(int id) {
         return formRepository.findById(id).orElse(null);
     }
-    
 
     public List<Form> getAllForms() {
         return formRepository.findAll();
@@ -59,6 +62,31 @@ public class FormService {
             }
         }
         formRepository.saveAll(forms);
+    }
+
+    public Form hideForm(int id) {
+        Form form = formRepository.findById(id).orElse(null);
+
+        if (form != null) {
+            form.setVisible(false);
+            formRepository.save(form);
+        } else {
+            logger.warn("Form with id {} not found", id);
+        }
+        return form;
+    }
+
+    public Form showForm(int id) {
+        Form form = formRepository.findById(id).orElse(null);
+
+        if (form != null) {
+            form.setVisible(true);
+            formRepository.save(form);
+        } else {
+            logger.warn("Form with id {} not found", id);
+        }
+
+        return form;
     }
 
     public Form getFormWithQuestions(int formId) {
